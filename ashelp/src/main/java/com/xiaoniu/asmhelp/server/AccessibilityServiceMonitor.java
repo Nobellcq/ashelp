@@ -21,6 +21,7 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
     private static AccessibilityServiceMonitor mAccessibilityServiceMonitor;
 
     public static AccessibilityServiceMonitor getInstance() {
+        //什么时候需要双重检测
         if (mAccessibilityServiceMonitor == null) {
             throw new NullPointerException("AblService辅助服务未开启");
         }
@@ -28,6 +29,7 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
     }
 
 
+    //为什么还要赋值一遍？
     @Override
     public void onCreate() {
         mAccessibilityServiceMonitor = this;
@@ -35,6 +37,9 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        //这边一般都为空，成功解耦
+
+
 //        int eventType = event.getEventType();
 //        int typeWindowStateChanged = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED;
 //        Log.d(TAG, "onAccessibilityEvent: " + eventType + "typeWindowStateChanged:" + typeWindowStateChanged);
@@ -45,10 +50,9 @@ public class AccessibilityServiceMonitor extends AccessibilityService {
     @Override
     public void onServiceConnected() {
         super.onServiceConnected();
-        //服务开启时，调用
         //setServiceInfo();这个方法同样可以实现xml中的配置信息
         //可以做一些开启后的操作比如点两下返回
-        Log.d(TAG, "onServiceConnected: ");
+        //再次赋值有必要吗？
         mAccessibilityServiceMonitor = this;
     }
 
